@@ -65,13 +65,13 @@ def start(message: types.Message):
             coll.insert_one({"_id": message.from_user.id, "username": message.from_user.username, "firstname": message.from_user.first_name, "refcount": 0})
     mention = util.user_link(message.from_user)
     bot.send_message(message.from_user.id, f'Hey <b>{mention}</b> 👋😉 \n\n🎉 Welcome to the <b>FXST Token Quiz Airdrop</b>! 🏆\n\nBefore we start the quiz, we need a few details from you to ensure we can send you your rewards if you win. 🏅')
-    bot.send_message(message.from_user.id, '<b>Please Submit Your Email Address</b> 📧:')
+    bot.send_message(message.from_user.id, 'Please submit your email address:')
     coll2.replace_one({"_id": message.from_user.id}, {"_id": message.from_user.id, "state": "email", "createdAt": datetime.utcnow()}, upsert=True)
 
 def get_email(message: types.Message):
     if message.entities and len(message.entities) == 1 and message.entities[0].offset == 0 and message.entities[0].length == len(message.text) and message.entities[0].type == "email":
         coll.update_one({"_id": message.from_user.id}, {"$set": {"email": message.text}})
-        bot.send_message(message.from_user.id, 'Okay. Now submit your <b>BNB BEP20 wallet address</b>👇🏻:')
+        bot.send_message(message.from_user.id, 'Okay. Now submit your BNB BEP20 wallet address:')
         coll2.replace_one({"_id": message.from_user.id}, {"_id": message.from_user.id, "state": "wallet", "createdAt": datetime.utcnow()}, upsert=True)
     else:
         bot.send_message(message.from_user.id, 'Invalid email address. Try again:')
@@ -81,7 +81,7 @@ def get_wallet(message: types.Message):
         coll.update_one({"_id": message.from_user.id}, {"$set": {"wallet": message.text}})
         keyboard = types.InlineKeyboardMarkup()
         keyboard.add(types.InlineKeyboardButton("I have joined", callback_data="telegram"))
-        bot.send_message(message.from_user.id, 'Okay. Now join our <b>Telegram Group:</b>\nhttps://t.me/+uFPk-Z12V3UyZDY1', reply_markup=keyboard)
+        bot.send_message(message.from_user.id, 'Okay. Now join our Telegram group:\nhttps://t.me/+uFPk-Z12V3UyZDY1', reply_markup=keyboard)
         coll2.delete_one({"_id": message.from_user.id})
     else:
         bot.send_message(message.from_user.id, 'Invalid wallet address. Try again:')
@@ -95,13 +95,13 @@ def telegram(call: types.CallbackQuery):
     except:
         pass
     bot.edit_message_reply_markup(call.from_user.id, call.message.message_id)
-    bot.send_message(call.from_user.id, 'Okay. Now follow our <b>Twitter page,Like 👍🏻 and Repost 📲 the pinned post and Tag 3 of your friends</b>:\nhttps://x.com/fxsttoken\n\nThen submit your Twitter username:\nExample: <code>@username</code>')
+    bot.send_message(call.from_user.id, 'Okay. Now follow our Twitter page, like and repost the pinned post and tag 3 of your friends:\nhttps://x.com/fxsttoken\n\nThen submit your Twitter username:\nExample: <code>@username</code>')
     coll2.replace_one({"_id": call.from_user.id}, {"_id": call.from_user.id, "state": "twitter", "createdAt": datetime.utcnow()}, upsert=True)
 
 def get_twitter(message: types.Message):
     if search(r"^@[a-zA-Z0-9_]{1,15}$", message.text):
         coll.update_one({"_id": message.from_user.id}, {"$set": {"twitter": message.text}})
-        bot.send_message(message.from_user.id, 'Okay. Now follow our <b>Instagram page,Like & Comment the pinned post</b>:\nhttps://www.instagram.com/fxsttoken\n\n<b>Then submit your Instagram username</b>:\nExample: <code>@username</code>')
+        bot.send_message(message.from_user.id, 'Okay. Now follow our Instagram page and like the pinned post:\nhttps://www.instagram.com/fxsttoken\n\nThen submit your Instagram username:\nExample: <code>@username</code>')
         coll2.replace_one({"_id": message.from_user.id}, {"_id": message.from_user.id, "state": "instagram", "createdAt": datetime.utcnow()}, upsert=True)
     else:
         bot.send_message(message.from_user.id, 'Invalid Twitter username. Try again:')
@@ -109,7 +109,7 @@ def get_twitter(message: types.Message):
 def get_instagram(message: types.Message):
     if search(r"^@[a-zA-Z0-9._]{1,30}$", message.text):
         coll.update_one({"_id": message.from_user.id}, {"$set": {"instagram": message.text}})
-        bot.send_message(message.from_user.id, 'Okay. Now follow our <b>Facebook page, Like and Comment on the pinned post</b>:\nhttps://www.facebook.com/fxsttoken\n\nThen submit your Facebook username:\nExample: <code>@username</code>')
+        bot.send_message(message.from_user.id, 'Okay. Now follow our Facebook page, like and comment on the pinned post:\nhttps://www.facebook.com/fxsttoken\n\nThen submit your Facebook username:\nExample: <code>@username</code>')
         coll2.replace_one({"_id": message.from_user.id}, {"_id": message.from_user.id, "state": "facebook", "createdAt": datetime.utcnow()}, upsert=True)
     else:
         bot.send_message(message.from_user.id, 'Invalid Instagram username. Try again:')
@@ -117,10 +117,18 @@ def get_instagram(message: types.Message):
 def get_facebook(message: types.Message):
     if search(r"^@[a-zA-Z0-9.]{5,30}$", message.text):
         coll.update_one({"_id": message.from_user.id}, {"$set": {"facebook": message.text}})
-        bot.send_message(message.from_user.id, 'Okay, Now <b>subscribe to our YouTube channel</b>:\nhttps://www.youtube.com/@FXstockToken\n\nThen submit your YouTube username:\nExample: <code>@username</code>')
-        coll2.replace_one({"_id": message.from_user.id}, {"_id": message.from_user.id, "state": "youtube", "createdAt": datetime.utcnow()}, upsert=True)
+        bot.send_message(message.from_user.id, '<b>Follow the FXST Token on CMC:</b> https://coinmarketcap.com/community/profile/fxst\n\n<b>Leave a comment on the FXST CMC Page:</b> https://coinmarketcap.com/currencies/fxg\n\n<b>Then share your CMC username:</b>\nExample: <code>@username</code>')
+        coll2.replace_one({"_id": message.from_user.id}, {"_id": message.from_user.id, "state": "cmc", "createdAt": datetime.utcnow()}, upsert=True)
     else:
         bot.send_message(message.from_user.id, 'Invalid Facebook username. Try again:')
+
+def get_cmc(message: types.Message):
+    if search(r"^@[a-zA-Z0-9_]{4,20}$", message.text):
+        coll.update_one({"_id": message.from_user.id}, {"$set": {"cmc": message.text}})
+        bot.send_message(message.from_user.id, 'Okay. Now subscribe to our YouTube channel:\nhttps://www.youtube.com/@FXstockToken\n\nThen submit your YouTube username:\nExample: <code>@username</code>')
+        coll2.replace_one({"_id": message.from_user.id}, {"_id": message.from_user.id, "state": "youtube", "createdAt": datetime.utcnow()}, upsert=True)
+    else:
+        bot.send_message(message.from_user.id, 'Invalid CMC username. Try again:')
 
 def get_youtube(message: types.Message):
     if search(r"^@[a-zA-Z0-9._-]{3,30}$", message.text):
@@ -133,12 +141,12 @@ def get_youtube(message: types.Message):
         if quiz_status:
             keyboard = types.InlineKeyboardMarkup()
             keyboard.add(types.InlineKeyboardButton('Start Quiz', callback_data="startquiz"))
-            bot.send_message(message.from_user.id, '<b>Congratulations</b>, you have successfully completed the airdrop tasks and are now eligible for the quiz round.\n\n<b>Press the button below to start the quiz👇🏻</b>.', reply_markup=keyboard)
+            bot.send_message(message.from_user.id, 'Congratulations, you have successfully completed the airdrop tasks and are now eligible for the quiz round.\n\nPress the button below to start the quiz.', reply_markup=keyboard)
         else:
             keyboard = types.InlineKeyboardMarkup()
             keyboard.add(types.InlineKeyboardButton("Account", callback_data=f"account"))
             keyboard.add(types.InlineKeyboardButton("Leaderboard", callback_data=f"leaderboard"))
-            bot.send_message(message.from_user.id, '<b>Congratulations</b>, you have successfully completed the airdrop tasks.', reply_markup=keyboard)
+            bot.send_message(message.from_user.id, 'Congratulations, you have successfully completed the airdrop tasks.', reply_markup=keyboard)
     else:
         bot.send_message(message.from_user.id, 'Invalid YouTube username. Try again:')
 
@@ -148,7 +156,7 @@ def startquiz(call: types.CallbackQuery):
     user = coll.find_one({"_id": call.from_user.id}, {"quiz_number": 1})
     quiz_number = user.get("quiz_number", 0)
     if quiz_number >= len(quiz_list):
-        bot.send_message(call.from_user.id, "<b>You have already completed the quiz round☹️</b>.")
+        bot.send_message(call.from_user.id, "You have already completed the quiz round.")
         keyboard = types.InlineKeyboardMarkup()
         keyboard.add(types.InlineKeyboardButton("Refresh", callback_data=f"account"))
         keyboard.add(types.InlineKeyboardButton("Leaderboard", callback_data=f"leaderboard"))
@@ -232,9 +240,10 @@ def account(call: types.CallbackQuery):
     twitter = user['twitter']
     instagram = user['instagram']
     facebook = user['facebook']
+    cmc = user['cmc']
     youtube = user['youtube']
     reflink = f"https://t.me/{botusername}?start={call.from_user.id}"
-    bot.send_message(call.from_user.id, f'You have {refcount} referrals and have scored {quiz_point} points in the quiz round.\n\n<b>Your saved data:</b>\nEmail: {email}\nWallet: {wallet}\nTelegram: {call.from_user.username}\nTwitter: {twitter}\nInstagram: {instagram}\nFacebook: {facebook}\nYouTube: {youtube}\n\n<b>Your referral link:</b>\n<code>{reflink}</code>', reply_markup=keyboard)
+    bot.send_message(call.from_user.id, f'You have {refcount} referrals and have scored {quiz_point} points in the quiz round.\n\n<b>Your saved data:</b>\nEmail: {email}\nWallet: {wallet}\nTelegram: {call.from_user.username}\nTwitter: {twitter}\nInstagram: {instagram}\nFacebook: {facebook}\nCMC: {cmc}\nYouTube: {youtube}\n\n<b>Your referral link:</b>\n<code>{reflink}</code>', reply_markup=keyboard)
 
 @bot.callback_query_handler(lambda call: call.data == "leaderboard")
 def leaderboard(call: types.CallbackQuery):
@@ -317,6 +326,8 @@ def other(message: types.Message):
                 get_instagram(message)
             elif state == "facebook":
                 get_facebook(message)
+            elif state == "cmc":
+                get_cmc(message)
             elif state == "youtube":
                 get_youtube(message)
         else:
