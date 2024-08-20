@@ -30,16 +30,16 @@ bot.delete_my_commands(scope=types.BotCommandScopeAllPrivateChats())
 
 quiz_status = True
 quiz_list = [
-    {"question": "What is the reward percentage for staking FXST for 75 days?", "answer": "36%", "options": ["20%", "29%", "36%", "43%"]},
-    {"question": "What is the primary use of the FXST token?", "answer": "Trading and staking", "options": ["Shopping", "Investing in stocks", "Trading and staking", "Travel bookings"]},
-    {"question": "What is the reward percentage for staking FXST for 60 days?", "answer": "28%", "options": ["15%", "20%", "25%", "28%"]},
+    {"question": "What is the main utility of the FXST Token?", "answer": "Staking", "options": ["Staking", "Trading", "Lending", "Governance"]},
+    {"question": "Which blockchain is FXST Token built on?", "answer": "Binance Smart Chain", "options": ["Ethereum", "Binance Smart Chain", "Solana", "Polkadot"]},
+    {"question": "Which platform will FXST Token be listed on first?", "answer": "LA Token", "options": ["Coinbase", "Bitmart", "MEXC", "LA Token"]},
     {"question": "Which use case of FXST Token involves a marketplace for digital collectibles?", "answer": "NFT marketplace", "options": ["Forex trading", "NFT marketplace", "Indices and commodity trading", "Crypto staking"]},
-    {"question": "When is the FXST Token expected to be listed on the LaToken exchange according to the roadmap?", "answer": "January 2024", "options": ["November 2023", "January 2024", "March 2024", "May 2024"]},
-    {"question": "What technology underlies cryptocurrencies?", "answer": "Blockchain", "options": ["Artificial Intelligence", "Cloud Computing", "Blockchain", "Quantum Computing"]},
-    {"question": "What is the purpose of a \"block\" in the blockchain?", "answer": "Validate transactions", "options": ["Store data", "Process transactions", "Execute smart contracts", "Validate transactions"]},
-    {"question": "Which term describes the total value of all coins of a cryptocurrency that have been mined?", "answer": "Market Cap", "options": ["Market Cap", "Circulating Supply", "Volume", "Hash Rate"]},
-    {"question": "Which of the following is a stablecoin?", "answer": "Tether (USDT)", "options": ["Bitcoin", "Tether (USDT)", "Ethereum", "Dogecoin"]},
-    {"question": "Which cryptocurrency was created as a joke but gained significant popularity?", "answer": "Dogecoin", "options": ["Bitcoin", "Ethereum", "Litecoin", "Dogecoin"]}
+    {"question": "Which feature is not associated with FXST Token?", "answer": "Lending", "options": ["Governance", "Lending", "Trading", "Rewards"]},
+    {"question": "What does <b>HODL</b> mean in crypto?", "answer": "Hold On for Dear Life", "options": ["Hold On for Dear Life", "High Order Digital Ledger", "Hold On Digital Liquidity", "Heavy Order Demand List"]},
+    {"question": "Who created Ethereum?", "answer": "Vitalik Buterin", "options": ["Satoshi Nakamoto", "Vitalik Buterin", "Charles Hoskinson", "Gavin Wood"]},
+    {"question": "Which country first adopted Bitcoin as legal tender?", "answer": "El Salvador", "options": ["United States", "Switzerland", "El Salvador", "Japan"]},
+    {"question": "Which term describes a rapid price increase in a cryptocurrency?", "answer": "Pump", "options": ["Pump", "Dump", "Burn", "Slash"]},
+    {"question": "Which of the following is a popular hardware wallet?", "answer": "Ledger", "options": ["MetaMask", "Coinbase", "Ledger", "Binance"]}
 ]
 
 @bot.message_handler(func=lambda message: message.text in ['/cancle'], chat_types=['private'])
